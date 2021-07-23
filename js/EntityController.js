@@ -5,17 +5,17 @@ let EntityController = (function () {
 
 		this.bind = function (entity) {
 			// We set the id of the Entity as we bind it to the EntityController
-			// Then we add it to the Entity List
 			entity.id = this.nextId;  
 			this.nextId++;
+			// Then we add it to the Entity List
 			entity.entityController = this;
 			this.entities.push(entity);
 		}
 
-		this.unlink = function (entity) {
+		this.unbind = function (entity) {
 			// When we destroy an entity, we have to unlink it from the EntityController
 			// This way, we will not search on it anymore, and the entity will not be used anymore
-			let index = this.entities.indexOf(entity);
+			const index = this.entities.indexOf(entity);
 			if (index > -1) {
 				this.entities.splice(index, 1);
 			}
@@ -47,6 +47,7 @@ let EntityController = (function () {
 
 	}
 
+	// We want our EntityController to be a singleton, as it's the place where every entities are stored
 	let instance = null;
 	return new function() {
 		this.getInstance = function() {

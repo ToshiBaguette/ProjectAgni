@@ -24,11 +24,9 @@ function startup(ctx) {
 		}
 		if (i % 3 == 0) {
 			e.addComponent(new ManaComponent());
-			e.addComponent(new ManaComponent());
 		}
 		ec.bind(e);
 	}
-	console.log(ec);
 
-	console.log(ec.searchByComponents([new StatsComponent(), new ManaComponent()]));
+	console.log(ec.searchByComponents([StatsComponent]));
 }

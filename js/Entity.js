@@ -8,7 +8,7 @@ class Entity {
 	hasComponent(component) {
 		// Will search in the components list is this entity has the one we ask for
 		for (let i = 0; i < this.components.length; i++) {
-			if (this.components[i].constructor == component.constructor) {
+			if (this.components[i].equal(component)) {
 				return true;
 			}
 		}
@@ -26,7 +26,7 @@ class Entity {
 
 	_getIndexOfComponent(component) {
 		for (let i = 0; i < this.components.length; i++) {
-			if (this.components[i].constructor == component.constructor) {
+			if (this.components[i].equal(component)) {
 				return i;
 			}
 		}
@@ -63,7 +63,7 @@ class Entity {
 	destroyEntity() {
 		// When destroying an entity, we unlink it from the EntityController
 		// Then we remove his components, making it an empty entity
-		this.entityController.unlink(this);
+		this.entityController.unbind(this);
 		this.components = [];
 	}
 
