@@ -1,9 +1,5 @@
-import { Entity } from './core/Entity.js';
-import { EntityController } from './core/EntityController.js';
-import { Component } from './core/Component.js';
-import { System, SystemConsoleLog } from './core/System.js';
+import { SystemConsoleLog } from './core/System.js';
 import { SystemController } from './core/SystemController.js';
-import { Event } from './core/Event.js'
 import { AgniCore } from './core/AgniCore.js';
 
 const AGNI_TICK_TIME = 1000 / 20;
