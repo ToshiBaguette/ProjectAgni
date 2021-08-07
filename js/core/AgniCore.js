@@ -16,4 +16,4 @@ function tick(entityController, systemController) {
 	systemController.tick();
 }
 
-export { MagniCore };
+export { AgniCore };

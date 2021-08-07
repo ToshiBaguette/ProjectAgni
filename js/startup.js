@@ -4,10 +4,12 @@ import { Component, HealthComponent, ManaComponent, StatsComponent } from './cor
 import { System, SystemConsoleLog } from './core/System.js';
 import { SystemController } from './core/SystemController.js';
 import { Event } from './core/Event.js'
-import { AgniCore, tickInterval } from './core/AgniCore.js';
+import { AgniCore } from './core/AgniCore.js';
 
-let canvas = document.getElementById("canvas");
-let ctx = canvas.getContext("2d");
+const AGNI_TICK_TIME = 1000 / 20;
+
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
 startup(ctx);
 
 function startup(ctx) {
@@ -15,7 +17,7 @@ function startup(ctx) {
 	ctx.fillStyle = 'rgb(0, 0, 0)';
 	ctx.fillRect(0, 0, 1280, 720);
 
-	const AgniInterval = AgniCore(500);  // Let's start the MagniCore
+	const AgniInterval = AgniCore(AGNI_TICK_TIME);  // Let's start the MagniCore
 
 	// Then, let's initialize our EntityController
 	const ec = EntityController.getInstance();
