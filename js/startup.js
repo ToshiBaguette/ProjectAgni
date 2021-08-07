@@ -1,6 +1,6 @@
 import { Entity } from './core/Entity.js';
 import { EntityController } from './core/EntityController.js';
-import { Component, HealthComponent, ManaComponent, StatsComponent } from './core/Component.js';
+import { Component } from './core/Component.js';
 import { System, SystemConsoleLog } from './core/System.js';
 import { SystemController } from './core/SystemController.js';
 import { Event } from './core/Event.js'
@@ -17,28 +17,18 @@ function startup(ctx) {
 	ctx.fillStyle = 'rgb(0, 0, 0)';
 	ctx.fillRect(0, 0, 1280, 720);
 
-	const AgniInterval = AgniCore(AGNI_TICK_TIME);  // Let's start the MagniCore
+	// Then we start the AgniCore
+	const AgniInterval = AgniCore(AGNI_TICK_TIME);
 
-	// Then, let's initialize our EntityController
-	const ec = EntityController.getInstance();
 
-	// Finally, for the test, let's declare a bunch of new entities
-	for (let i = 0; i < 50; i++) {
-		let e = new Entity();
-		e.addComponent(new HealthComponent());
-		if (i % 2 == 0) {
-			e.addComponent(new StatsComponent());
-		}
-		if (i % 3 == 0) {
-			e.addComponent(new ManaComponent());
-		}
-		ec.bind(e);
-	}
-
-	// Now let's test our new event/system architecture !
+	// To demonstrate, we want to create a new countinuous system, that will log something on each tick
+	// To do that, we get our SystemController instance
 	const sc = SystemController.getInstance();
-
-	// first, let's create a continuous system
+	// Create a new system, this one already exists and is useful to debug, it will log a message each time it is called
 	const continuousSystem = new SystemConsoleLog("tick", [], true);
+	// And finally we bind it to the SystemController, for it to be called every tick as it is a continuous system
 	sc.bind(continuousSystem);
+
+	// We could have created a system that is called when a certain event is fired, like that :
+	// new SystemConsoleLog("tick", ['event.name', 'another.event.name'])
 }
