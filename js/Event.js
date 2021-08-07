@@ -4,3 +4,5 @@ class Event {
 		this.name = "base.event";
 	}
 }
+
+export { Event };

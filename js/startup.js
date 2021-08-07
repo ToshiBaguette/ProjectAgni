@@ -1,7 +1,9 @@
 import { Entity } from './Entity.js';
 import { EntityController } from './EntityController.js';
 import { Component, HealthComponent, ManaComponent, StatsComponent } from './Component.js';
-
+import { System, SystemConsoleLog } from './System.js';
+import { SystemController } from './SystemController.js';
+import { Event } from './Event.js'
 
 let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext("2d");
@@ -13,7 +15,7 @@ function startup(ctx) {
 	ctx.fillRect(0, 0, 1280, 720);
 
 	// Then, let's initialize our EntityController
-	let ec = EntityController.getInstance();
+	const ec = EntityController.getInstance();
 
 	// Finally, for the test, let's declare a bunch of new entities
 	for (let i = 0; i < 50; i++) {
@@ -27,6 +29,25 @@ function startup(ctx) {
 		}
 		ec.bind(e);
 	}
-
 	console.log(ec.searchByComponents([StatsComponent]));
+
+
+	// Now let's test our new event/system architecture !
+	const sc = SystemController.getInstance();
+
+	// first, let's create a continuous system
+	const continuousSystem = new SystemConsoleLog("continuous update", [], true);
+	// and an observer
+	const observerSystem = new SystemConsoleLog("observer update", ['test.event'], false);
+
+	// We have to bind them to the controller
+	sc.bind(continuousSystem);
+	sc.bind(observerSystem);
+
+	// Finally, let's try to tick, and to fire an event
+	sc.tick();
+
+	const event = new Event();
+	event.name = 'test.event';
+	sc.dispatchEvent(event);
 }
