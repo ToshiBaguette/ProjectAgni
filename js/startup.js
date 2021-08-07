@@ -1,9 +1,10 @@
-import { Entity } from './Entity.js';
-import { EntityController } from './EntityController.js';
-import { Component, HealthComponent, ManaComponent, StatsComponent } from './Component.js';
-import { System, SystemConsoleLog } from './System.js';
-import { SystemController } from './SystemController.js';
-import { Event } from './Event.js'
+import { Entity } from './core/Entity.js';
+import { EntityController } from './core/EntityController.js';
+import { Component, HealthComponent, ManaComponent, StatsComponent } from './core/Component.js';
+import { System, SystemConsoleLog } from './core/System.js';
+import { SystemController } from './core/SystemController.js';
+import { Event } from './core/Event.js'
+import { MagniCore, tickInterval } from './core/MagniCore.js';
 
 let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext("2d");
@@ -13,6 +14,8 @@ function startup(ctx) {
 	// Let's start by making the canvas black
 	ctx.fillStyle = 'rgb(0, 0, 0)';
 	ctx.fillRect(0, 0, 1280, 720);
+
+	MagniCore(500);  // Let's start the MagniCore
 
 	// Then, let's initialize our EntityController
 	const ec = EntityController.getInstance();
@@ -29,25 +32,11 @@ function startup(ctx) {
 		}
 		ec.bind(e);
 	}
-	console.log(ec.searchByComponents([StatsComponent]));
-
 
 	// Now let's test our new event/system architecture !
 	const sc = SystemController.getInstance();
 
 	// first, let's create a continuous system
-	const continuousSystem = new SystemConsoleLog("continuous update", [], true);
-	// and an observer
-	const observerSystem = new SystemConsoleLog("observer update", ['test.event'], false);
-
-	// We have to bind them to the controller
+	const continuousSystem = new SystemConsoleLog("tick", [], true);
 	sc.bind(continuousSystem);
-	sc.bind(observerSystem);
-
-	// Finally, let's try to tick, and to fire an event
-	sc.tick();
-
-	const event = new Event();
-	event.name = 'test.event';
-	sc.dispatchEvent(event);
 }
