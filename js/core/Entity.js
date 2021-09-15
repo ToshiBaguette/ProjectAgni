@@ -5,6 +5,14 @@ class Entity {
 		this.entityController = null;  // Once the entity is bound to the EntityController, it will have a reference to it
 	}
 
+	_getIndexOfComponent(component) {
+		for (let i = 0; i < this.components.length; i++) {
+			if (this.components[i].equal(component)) {
+				return i;
+			}
+		}
+	}
+
 	hasComponent(component) {
 		// Will search in the components list is this entity has the one we ask for
 		for (let i = 0; i < this.components.length; i++) {
@@ -24,11 +32,9 @@ class Entity {
 		return true;
 	}
 
-	_getIndexOfComponent(component) {
-		for (let i = 0; i < this.components.length; i++) {
-			if (this.components[i].equal(component)) {
-				return i;
-			}
+	getComponent(component) {
+		if (this.hasComponent(component)) {
+			return this.components[this._getIndexOfComponent(component)];
 		}
 	}
 
