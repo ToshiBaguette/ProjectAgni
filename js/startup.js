@@ -4,10 +4,16 @@ import { Entity } from './core/Entity.js';
 import { ResolutionComponent } from './objects/components/CameraComponents.js';
 import { SystemController } from './core/SystemController.js';
 import { AgniCore } from './core/AgniCore.js';
+import { SystemConsoleLog } from './objects/systems/systemConsoleLog.js';
 
-const AGNI_TICK_TIME = 1000 / 30;
+const AGNI_TICK_TIME = 1000 / 15;
+const WIDTH = 1280;
+const HEIGHT = 720;
 
 const canvas = document.getElementById("canvas");
+canvas.width = WIDTH
+canvas.height = HEIGHT;
+
 const ctx = canvas.getContext("2d");
 startup(ctx);
 
@@ -24,7 +30,7 @@ function startup(ctx) {
 	const sc = SystemController.getInstance();
 
 	const camera = new Entity();
-	camera.addComponent(new ResolutionComponent(10, 10));
+	camera.addComponent(new ResolutionComponent(WIDTH, HEIGHT));
 
 	const renderer = new Renderer3D(camera);
 	const displayer = new DisplayerSystem(canvas);

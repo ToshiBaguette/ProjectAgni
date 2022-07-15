@@ -9,29 +9,31 @@ class DisplayerSystem extends System {
 		this.posYStart = posYStart;
 		this.posXStop = posXStop;
 		this.posYStop = posYStop;
+
+		if (this.posYStop == -1) {
+			this.posYStop = canvas.height
+		}
+		if (this.posXStop == -1) {
+			this.posXStop = canvas.width
+		}
 	}
 
 	update(event) {
 		let ctx = this.canvas.getContext("2d");
+		let canvasData = ctx.getImageData(this.posXStart, this.posYStart, this.posXStop, this.posYStop);
 		let pixels = event.getPixels();
 
 		for (let y = 0; y < pixels.length; y++) {
 			for (let x = 0; x < pixels[y].length; x++) {
-				ctx.fillStyle = 'rgb(' + pixels[y][x][0] + ',' + pixels[y][x][1] + ',' + pixels[y][x][2] + ')';
-				
-				let drawX = x + this.posXStart;
-				if (this.posXStop > this.posXStart && drawX > this.posXStart) {
-					drawX = -1;
-				}
-				let drawY = y + this.posYStart;
-				if (this.posYStop > this.posYStart && drawY > this.posXYtart) {
-					drawY = -1;
-				}
-
-				ctx.fillRect(drawX * 100, drawY * 100, 100, 100);
+				let index = (y * pixels[y].length + x) * 4;
+				canvasData.data[index] = pixels[y][x][0];
+				canvasData.data[index + 1] = pixels[y][x][1];
+				canvasData.data[index + 2] = pixels[y][x][2];
+				canvasData.data[index + 3] = 255;
 			}
 		}
 
+		ctx.putImageData(canvasData, this.posXStart, this.posYStart);
 	}
 }
 
