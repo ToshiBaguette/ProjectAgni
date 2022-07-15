@@ -18,7 +18,7 @@ class DisplayerSystem extends System {
 		}
 	}
 
-	update(event) {
+	async update(event) {
 		let ctx = this.canvas.getContext("2d");
 		let canvasData = ctx.getImageData(this.posXStart, this.posYStart, this.posXStop, this.posYStop);
 		let pixels = event.getPixels();

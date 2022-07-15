@@ -6,7 +6,7 @@ class System {
 		this._observedEvents = observedEvents;
 	}
 
-	update(infos) {
+	async update(infos) {
 		// The update function is called every time an event this system observes is fired
 		// Or every tick, if this System is continuously active.
 	}

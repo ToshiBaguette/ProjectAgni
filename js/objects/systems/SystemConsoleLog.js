@@ -7,7 +7,7 @@ class SystemConsoleLog extends System {
         this.message = message;
     }
 
-    update(event) {
+    async update(event) {
         console.log(this.message);
     }
 }

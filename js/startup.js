@@ -6,7 +6,7 @@ import { SystemController } from './core/SystemController.js';
 import { AgniCore } from './core/AgniCore.js';
 import { SystemConsoleLog } from './objects/systems/systemConsoleLog.js';
 
-const AGNI_TICK_TIME = 1000 / 15;
+const AGNI_TICK_TIME = 1000 / 30;
 const WIDTH = 1280;
 const HEIGHT = 720;
 

@@ -19,7 +19,7 @@ class Renderer3D extends System {
 		
 	}
 
-	update(infos) {
+	async update(infos) {
 		// We will take the camera and observe the world with it
 		// Then, we will dispatch an array of pixels as an event, the size of the camera's view
 		// This event will be observed by another system, whose sole purpose is to display what's been rendered
