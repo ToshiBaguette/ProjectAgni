@@ -16,24 +16,24 @@ class DisplayerSystem extends System {
 		if (this.posXStop == -1) {
 			this.posXStop = canvas.width
 		}
+		
+		this.ctx = this.canvas.getContext("2d", {alpha: false}) // Turn off alpha to speed up drawing
 	}
 
 	async update(event) {
-		let ctx = this.canvas.getContext("2d");
-		let canvasData = ctx.getImageData(this.posXStart, this.posYStart, this.posXStop, this.posYStop);
+		let canvasData = this.ctx.getImageData(this.posXStart, this.posYStart, this.posXStop, this.posYStop);
 		let pixels = event.getPixels();
 
 		for (let y = 0; y < pixels.length; y++) {
 			for (let x = 0; x < pixels[y].length; x++) {
-				let index = (y * pixels[y].length + x) * 4;
+				let index = (y * pixels[y].length + x) * 3;
 				canvasData.data[index] = pixels[y][x][0];
 				canvasData.data[index + 1] = pixels[y][x][1];
 				canvasData.data[index + 2] = pixels[y][x][2];
-				canvasData.data[index + 3] = 255;
 			}
 		}
 
-		ctx.putImageData(canvasData, this.posXStart, this.posYStart);
+		this.ctx.putImageData(canvasData, this.posXStart, this.posYStart);
 	}
 }
 
